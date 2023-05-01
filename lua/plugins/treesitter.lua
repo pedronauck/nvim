@@ -20,5 +20,8 @@ return {
 			"rust",
 			"toml",
 		},
+		autotag = {
+			enable = true,
+		},
 	},
 }
