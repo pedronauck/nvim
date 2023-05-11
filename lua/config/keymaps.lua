@@ -1,14 +1,37 @@
--- Keymaps are automatically loaded on the VeryLazy event
--- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
--- Add any additional keymaps here
+local function map(mode, lhs, rhs, opts)
+	opts = opts or {}
+	opts.silent = opts.silent ~= false
+	vim.keymap.set(mode, lhs, rhs, opts)
+end
 
-vim.keymap.set("n", "<leader>bw", "<leader>bD", { remap = true })
-vim.keymap.set("n", "<C-u>", "16jzz")
-vim.keymap.set("n", "<C-i>", "16kzz")
--- vim.keymap.set("x", "p", '"_dP')
-vim.keymap.set({ "n", "x" }, "x", '"_x')
-vim.keymap.set({ "n", "x" }, "X", '"_X')
-vim.keymap.set({ "n", "x" }, "d", '"_d')
-vim.keymap.set({ "n", "x" }, "<Del>", '"_x')
-vim.keymap.set({ "n", "v" }, "<C-j>", "<A-j>", { remap = true })
-vim.keymap.set({ "n", "v" }, "<C-k>", "<A-k>", { remap = true })
+-- scroll and search
+map("n", "<C-u>", "<C-d>zz")
+map("n", "<C-i>", "<C-u>zz")
+map("n", "n", "nzzzv")
+map("n", "N", "Nzzzv")
+
+-- copy and paste
+map({ "v", "n", "x" }, "x", '"_x')
+map({ "v", "n", "x" }, "X", '"_X')
+map({ "v", "n", "x" }, "d", '"_d')
+map({ "v" }, "p", '"_dp')
+map({ "v" }, "P", '"_dP')
+map({ "v", "n", "x" }, "<Del>", '"_x')
+
+-- go to begginning
+map("n", "gg", "gg0", { desc = "Go to begginning" })
+
+-- diagnostics
+map("n", "<leader>cD", "<cmd>DiagWindowShow<cr>", { desc = "Open Diagnostics" })
+
+-- chatgpt
+map("n", "<leader>ug", "<cmd>ChatGPT<cr>", { desc = "ChatGPT" })
+map(
+	{ "n", "v" },
+	"<leader>cg",
+	"<cmd>ChatGPTEditWithInstructions<cr>",
+	{ desc = "Edit with ChatGPT" }
+)
+
+-- filebrowser
+map("n", "<leader>r", "<leader>fB", { desc = "Browse Files" })
